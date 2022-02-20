@@ -1,0 +1,42 @@
+target
+ideatarget
+.target
+bin
+.cache
+.cache-main
+.cache-tests
+.classpath
+.project
+.tmpBin
+.factorypath
+.settings
+logs
+.idea
+.iml
+.g8
+.toDelete
+.vagrant
+.sbt
+null/
+.bsp
+
+# Provisioning (Vagrant, Anisble, etc.)
+.vagrant
+*.retry
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+# Visual Studio 2015 cache/options directory
+.vs/
+
+!/tools/devops/provision/qa/qa1-dcos/dcos-vagrant/provision/bin
