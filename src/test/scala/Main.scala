@@ -1,5 +1,5 @@
 import `macro`.KafkaClient
-import sample.{SampleMessage, SampleService}
+import sample.{ SampleMessage, SampleService }
 import zio._
 import zio.blocking.Blocking
 import zio.clock.Clock
@@ -11,12 +11,15 @@ object Main extends zio.App {
   val kafkaClient = KafkaClient.implement[SampleService, SampleMessage](_.sampleTopic())
 
   val app = kafkaClient.consumeWith {
-    case (k,v) => ZIO.debug(v)
+    case (k, v) => ZIO.debug(v)
   }
 
-  override def run(args: List[String]) = app.inject(
-    Blocking.live,
-    Clock.live,
-    ZLayer.succeed[ConsumerSettings](ConsumerSettings(List("localhost2:9092")).withGroupId("sample-group"))
-  ).exitCode
+  override def run(args: List[String]) =
+    app
+      .inject(
+        Blocking.live,
+        Clock.live,
+        ZLayer.succeed[ConsumerSettings](ConsumerSettings(List("localhost2:9092")).withGroupId("sample-group"))
+      )
+      .exitCode
 }

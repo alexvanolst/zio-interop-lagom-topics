@@ -1,0 +1,3 @@
+import sbt.addSbtPlugin
+
+addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.4.4")

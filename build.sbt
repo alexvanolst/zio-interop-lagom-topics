@@ -18,3 +18,5 @@ lazy val root = (project in file("."))
     ),
     testFrameworks += new TestFramework("zio.test.sbt.ZTestFramework")
   )
+
+addCommandAlias("fmt", "all scalafmtSbt scalafmtAll")

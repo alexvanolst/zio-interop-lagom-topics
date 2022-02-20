@@ -1,9 +1,9 @@
 package serde
 
 import org.apache.kafka.common.header.Headers
-import play.api.libs.json.{Format, Json}
+import play.api.libs.json.{ Format, Json }
 import zio.kafka.serde.Serde
-import zio.{RIO, ZIO}
+import zio.{ RIO, ZIO }
 
 object PlaySerde {
 
