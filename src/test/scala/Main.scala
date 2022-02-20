@@ -19,7 +19,7 @@ object Main extends zio.App {
       .inject(
         Blocking.live,
         Clock.live,
-        ZLayer.succeed[ConsumerSettings](ConsumerSettings(List("localhost2:9092")).withGroupId("sample-group"))
+        ZLayer.succeed[ConsumerSettings](ConsumerSettings(List("localhost:29092")).withGroupId("sample-group"))
       )
       .exitCode
 }
