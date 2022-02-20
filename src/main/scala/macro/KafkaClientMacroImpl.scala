@@ -138,7 +138,6 @@ private class KafkaClientMacroImpl(val c: blackbox.Context) {
 
             override def consumeWith[R](zio: (String, ${topicType.tpe}) => URIO[R, Unit]): ZIO[R with Blocking with Clock with Has[ConsumerSettings], Throwable, Unit] =
               for {
-                 _ <- ZIO.debug("About to consume")
                  consumerSettings <- ZIO.service[ConsumerSettings]
                  _ <- Consumer.consumeWith(consumerSettings, subscription, Serde.string, PlaySerde.serdeOf[SampleMessage]) {
                         case (k, v) => zio(k, v)
