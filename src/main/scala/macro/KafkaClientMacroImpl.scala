@@ -94,8 +94,8 @@ private class KafkaClientMacroImpl(val c: blackbox.Context) {
     """)
   }
 
-  // Probably will result in ugly compiler errors when something unexpected is passed but should be fine for a v1
-  def hackyGetTopicFunctionName(tree: Function, candidates: Seq[MethodSymbol]): Name =
+  // TODO: This could be reworked to have better error messages
+  def getTopicFunctionName(tree: Function, candidates: Seq[MethodSymbol]): Name =
     tree.children(1).asInstanceOf[Apply].fun.asInstanceOf[Select].name
 
   def getTopicName[S <: Service](topicName: Name)(implicit serviceType: WeakTypeTag[S]) = {
@@ -104,9 +104,9 @@ private class KafkaClientMacroImpl(val c: blackbox.Context) {
 
     val functionToKafkaTopics = descriptor.topics.map { topicCall =>
       topicCall.topicHolder
-        .asInstanceOf[ScalaMethodTopic[_]]
+        .asInstanceOf[ScalaMethodTopic[_]] // Need this cast because lagom hides internals behind unsealed trait
         .method
-        .getName -> topicCall.topicId.name // Need this cast because lagom hides internals behind unsealed trait
+        .getName -> topicCall.topicId.name
     }
 
     functionToKafkaTopics.find(
@@ -118,7 +118,7 @@ private class KafkaClientMacroImpl(val c: blackbox.Context) {
     topicCall: Expr[S => Topic[T]]
   )(implicit serviceType: WeakTypeTag[S], topicType: WeakTypeTag[T]): Expr[KafkaClient[T]] = {
     val topicFunctionName =
-      hackyGetTopicFunctionName(topicCall.tree.asInstanceOf[Function], validateServiceInterface[S].topics)
+      getTopicFunctionName(topicCall.tree.asInstanceOf[Function], validateServiceInterface[S].topics)
 
     getTopicName(topicFunctionName) match {
       case Some((function, topicName)) =>
