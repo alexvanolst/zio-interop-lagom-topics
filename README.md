@@ -13,4 +13,5 @@ We've decided to go with requiring a macro call per exposed topic rather than ge
 - Also implement Http Client (can reuse play formats and construct simple sttp clients) 
 - Support for more modes consuming from kafka (currently the simple)
 - Cross compile to 2.12 (Scala 3 not really necessary because Lagom will not be ported to scala 3)
+- Potentially write an integration test with a Kafka testcontainer
 - Publish artifacts
